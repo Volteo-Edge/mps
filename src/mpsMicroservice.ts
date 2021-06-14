@@ -9,7 +9,7 @@ import { MPSServer } from './server/mpsserver'
 import { logger as log } from './utils/logger'
 import { IDbProvider } from './models/IDbProvider'
 import { DeviceDb } from './db/device'
-import { Device } from './models/models'
+import { Device } from './models'
 import { Environment } from './utils/Environment'
 export class MPSMicroservice {
   mpsserver: MPSServer

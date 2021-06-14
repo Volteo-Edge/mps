@@ -22,7 +22,7 @@
 import * as net from 'net'
 import * as tls from 'tls'
 
-import { configType, certificatesType } from '../models/Config'
+import { MPSConfig, certificatesType } from '../models'
 import { APFProtocol, APFChannelOpenFailureReasonCode } from '../models/Mps'
 import { logger as log } from '../utils/logger'
 import { MPSMicroservice } from '../mpsMicroservice'
@@ -35,7 +35,7 @@ const MAX_IDLE = 90000
 export class MPSServer {
   db: IDbProvider
   mpsService: MPSMicroservice
-  config: configType
+  config: MPSConfig
   certs: certificatesType
   ciraConnections = {}
   server: any

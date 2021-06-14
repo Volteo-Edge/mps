@@ -4,7 +4,7 @@
  **********************************************************************/
 import { validationResult } from 'express-validator'
 import { DeviceDb } from '../../db/device'
-import { Device } from '../../models/models'
+import { Device } from '../../models'
 import { logger as log } from '../../utils/logger'
 import { MPSValidationError } from '../../utils/MPSValidationError'
 

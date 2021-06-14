@@ -6,7 +6,7 @@ import { logger as log } from '../utils/logger'
 import { PostgresDb } from '.'
 import { IDeviceDb } from '../interfaces/IDeviceDb'
 import { Environment } from '../utils/Environment'
-import { Device } from '../models/models'
+import { Device } from '../models'
 import { mapToDevice } from './mapToDevice'
 import { MPSValidationError } from '../utils/MPSValidationError'
 

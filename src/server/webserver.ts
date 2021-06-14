@@ -15,7 +15,7 @@ import express from 'express'
 import * as http from 'http'
 import * as parser from 'body-parser'
 import jws from 'jws'
-import { configType, certificatesType, queryParams } from '../models/Config'
+import { MPSConfig, certificatesType, queryParams } from '../models'
 import { ErrorResponse } from '../utils/amtHelper'
 import { logger as log } from '../utils/logger'
 import { constants } from 'crypto'
@@ -37,7 +37,7 @@ export class WebServer {
   notificationwss = null
   relaywss = null
   mpsService: MPSMicroservice
-  config: configType
+  config: MPSConfig
   certs: certificatesType
   sessionParser: any
 

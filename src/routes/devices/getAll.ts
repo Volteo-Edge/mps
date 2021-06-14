@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 import { DeviceDb } from '../../db/device'
-import { Device } from '../../models/models'
+import { Device } from '../../models'
 import { logger as log } from '../../utils/logger'
 
 export async function getAllDevices (req, res): Promise<void> {

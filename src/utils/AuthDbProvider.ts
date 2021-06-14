@@ -4,7 +4,7 @@
 **********************************************************************/
 import { IDbProvider } from '../models/IDbProvider'
 import { ISecretManagerService } from '../models/ISecretManagerService'
-import { configType } from '../models/Config'
+import { MPSConfig } from '../models'
 import { IDeviceDb } from '../interfaces/IDeviceDb'
 
 export class AuthDbProvider implements IDbProvider {
@@ -12,8 +12,8 @@ export class AuthDbProvider implements IDbProvider {
   deviceDb: IDeviceDb
   secretsPath: string
   logger: any
-  config: configType
-  constructor (secretsManager: ISecretManagerService, deviceDb: IDeviceDb, logger: any, config: configType) {
+  config: MPSConfig
+  constructor (secretsManager: ISecretManagerService, deviceDb: IDeviceDb, logger: any, config: MPSConfig) {
     this.secretsManager = secretsManager
     this.deviceDb = deviceDb
     this.secretsPath = config.secrets_path

@@ -8,7 +8,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 
 import { logger as log } from './logger'
-import { mpsConfigType, webConfigType, directConfigType } from '../models/Config'
+import { mpsConfigType, webConfigType, directConfigType } from '../models'
 import { constants } from 'crypto'
 
 const webTlsConfigPath = path.join(__dirname, '../../private/webtlsconfig.json')

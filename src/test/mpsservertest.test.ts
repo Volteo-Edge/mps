@@ -9,7 +9,7 @@ import * as fs from 'fs'
 import * as https from 'https'
 import * as forge from 'node-forge'
 import { certificates } from '../utils/certificates'
-import { certificatesType, configType } from '../models/Config'
+import { certificatesType, MPSConfig } from '../models'
 import { MPSMicroservice } from '../mpsMicroservice'
 import { MPSServer } from '../server/mpsserver'
 import { join } from 'path'
@@ -17,7 +17,7 @@ import { Database } from './helper/db'
 
 
 // Parsing configuration
-const config: configType = {
+const config: MPSConfig = {
   common_name: 'localhost',
   port: 4433,
   country: 'US',

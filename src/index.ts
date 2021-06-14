@@ -7,11 +7,11 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { logger as log } from './utils/logger'
 import { MPSMicroservice } from './mpsMicroservice'
-import { configType, certificatesType } from './models/Config'
+import { MPSConfig, certificatesType } from './models'
 
 import { certificates } from './utils/certificates'
 import { tlsConfig } from './utils/tlsConfiguration'
-import { IDbProvider } from './models/IDbProvider'
+import { IDbProvider } from './interfaces/IDbProvider'
 
 import { SecretManagerService } from './utils/SecretManagerService'
 import { parseValue } from './utils/parseEnvValue'
@@ -29,7 +29,7 @@ try {
     }, {})
 
   // build config object
-  const config: configType = rc('mps')
+  const config: MPSConfig = rc('mps')
 
   if (!config.web_admin_password || !config.web_admin_user || !config.jwt_secret) {
     log.error('Web admin username, password and jwt secret are mandatory. Make sure to set values for these variables.')
