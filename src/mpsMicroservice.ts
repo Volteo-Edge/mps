@@ -18,7 +18,6 @@ export class MPSMicroservice {
   webserver: WebServer
   config: configType
   certs: certificatesType
-  debugLevel: number = 1
   mpsComputerList = {}
   db: IDbProvider
   deviceDb: DeviceDb
@@ -26,7 +25,6 @@ export class MPSMicroservice {
   constructor (config: configType, db: IDbProvider, certs: certificatesType, mqtt?: MqttProvider) {
     try {
       this.config = config
-      this.debugLevel = config.debug_level
       this.db = db
       this.certs = certs
       this.mqtt = mqtt
