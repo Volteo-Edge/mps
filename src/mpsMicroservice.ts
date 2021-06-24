@@ -49,7 +49,7 @@ export class MPSMicroservice {
       if (results) {
         log.info(`CIRA connection established for ${guid}`)
       } else {
-        log.info(`Failed to update CIRA Connection established status in DB ${guid}`)
+        log.error(`Failed to update CIRA Connection established status in DB ${guid}`)
       }
     }
     if (this.webserver) {
@@ -65,7 +65,7 @@ export class MPSMicroservice {
         device.mpsInstance = null
         const results = await this.deviceDb.update(device)
         if (results) {
-          log.info(`Device connection status updated in db : ${guid}`)
+          log.debug(`Device connection status updated in db : ${guid}`)
         }
       }
     }

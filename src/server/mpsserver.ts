@@ -61,6 +61,7 @@ export class MPSServer {
     this.server.listen(this.config.port, () => {
       const mpsaliasport = (typeof this.config.alias_port === 'undefined') ? `${this.config.port}` : `${this.config.port} alias port ${this.config.alias_port}`
       log.info(`Intel(R) AMT server running on ${this.config.common_name}:${mpsaliasport}.`)
+      console.log(`Intel(R) AMT server running on ${this.config.common_name}:${mpsaliasport}.`)
     })
 
     this.server.on('error', (err) => {
@@ -175,7 +176,7 @@ export class MPSServer {
         if (len < 5) {
           return 0
         }
-        log.debug(`MPS: KEEPALIVE_REQUEST: ${socket.tag.nodeid}`)
+        log.silly(`MPS: KEEPALIVE_REQUEST: ${socket.tag.nodeid}`)
         this.SendKeepAliveReply(socket, common.ReadInt(data, 1))
         return 5
       }
@@ -199,7 +200,7 @@ export class MPSServer {
           }
         } else {
           try {
-            log.debug(`MPS:GUID ${socket.tag.SystemId} is not allowed to connect.`)
+            log.warn(`MPS:GUID ${socket.tag.SystemId} is not allowed to connect.`)
             socket.end()
           } catch (e) { }
         }
@@ -223,7 +224,7 @@ export class MPSServer {
         log.silly(`MPS:USERAUTH_REQUEST user=${username} service=${serviceName} method=${methodName} password=${password}`)
         // Authenticate device connection using username and password
         if (this.db.CIRAAuth(socket.tag.SystemId, username, password)) {
-          log.debug('MPS:CIRA Authentication successful for ', username)
+          log.info('MPS:CIRA Authentication successful for ', username)
           this.ciraConnections[socket.tag.SystemId] = socket
           await this.mpsService.CIRAConnected(socket.tag.SystemId) // Notify that a connection is successful to console
           this.SendUserAuthSuccess(socket) // Notify the auth success on the CIRA connection
@@ -389,7 +390,7 @@ export class MPSServer {
         log.silly('MPS:CHANNEL_OPEN_FAILURE', RecipientChannel.toString(), ReasonCode.toString())
         const cirachannel = socket.tag.channels[RecipientChannel]
         if (cirachannel == null) {
-          log.debug(`MPS Error in CHANNEL_OPEN_FAILURE: Unable to find channelid ${RecipientChannel}`); return 17
+          log.warn(`MPS Error in CHANNEL_OPEN_FAILURE: Unable to find channelid ${RecipientChannel}`); return 17
         }
         if (cirachannel.state > 0) {
           cirachannel.state = 0
@@ -406,7 +407,7 @@ export class MPSServer {
         log.silly('MPS:CHANNEL_CLOSE', RecipientChannel.toString())
         const cirachannel = socket.tag.channels[RecipientChannel]
         if (cirachannel == null) {
-          log.debug(`MPS Error in CHANNEL_CLOSE: Unable to find channelid ${RecipientChannel}`); return 5
+          log.warn(`MPS Error in CHANNEL_CLOSE: Unable to find channelid ${RecipientChannel}`); return 5
         }
         this.SendChannelClose(cirachannel.socket, cirachannel.amtchannelid)
         socket.tag.activetunnels--
@@ -425,7 +426,7 @@ export class MPSServer {
         const ByteToAdd: number = common.ReadInt(data, 5)
         const cirachannel = socket.tag.channels[RecipientChannel]
         if (cirachannel == null) {
-          log.debug(`MPS Error in CHANNEL_WINDOW_ADJUST: Unable to find channelid ${RecipientChannel}`); return 9
+          log.warn(`MPS Error in CHANNEL_WINDOW_ADJUST: Unable to find channelid ${RecipientChannel}`); return 9
         }
         cirachannel.sendcredits += ByteToAdd
         log.silly('MPS:CHANNEL_WINDOW_ADJUST', RecipientChannel.toString(), ByteToAdd.toString(), cirachannel.sendcredits)
@@ -456,7 +457,7 @@ export class MPSServer {
         log.silly('MPS:CHANNEL_DATA', RecipientChannel.toString(), LengthOfData.toString())
         const cirachannel = socket.tag.channels[RecipientChannel]
         if (cirachannel == null) {
-          log.debug(`MPS Error in CHANNEL_DATA: Unable to find channelid ${RecipientChannel}`); return 9 + LengthOfData
+          log.warn(`MPS Error in CHANNEL_DATA: Unable to find channelid ${RecipientChannel}`); return 9 + LengthOfData
         }
         cirachannel.amtpendingcredits += LengthOfData
         if (cirachannel.onData) cirachannel.onData(cirachannel, data.substring(9, 9 + LengthOfData))
@@ -477,7 +478,7 @@ export class MPSServer {
         return 7
       }
       default: {
-        log.debug(`MPS:Unknown CIRA command: ${cmd}`)
+        log.warn(`MPS:Unknown CIRA command: ${cmd}`)
         return -1
       }
     }
